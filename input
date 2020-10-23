@@ -2,10 +2,3 @@ entero i;
 i = 5;
 i = i+3;
 i += 5;
-si(i<5){
-    i++;
-}
-contra
-{
-    i--;
-}
