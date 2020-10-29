@@ -57,6 +57,7 @@ MIENTRAS "mientras"
 HACER "hacer"
 PARA "para"
 CAMBIAR "cambiar"
+CASO "caso"
 INTERRUMPIR "interrumpir"
 DEFECTO "defecto"
 CONTINUAR "continuar"
@@ -86,6 +87,7 @@ FALSOENTERO {ENTERO}[^{ENTERO}]
 {HACER} {agregar_token(HACER, yytext); return HACER;}
 {PARA} {agregar_token(PARA, yytext); return PARA;}
 {CAMBIAR} {agregar_token(CAMBIAR, yytext); return CAMBIAR;}
+{CASO} {agregar_token(CASO, yytext); return CASO;}
 {CONTINUAR} {agregar_token(CONTINUAR, yytext); return CONTINUAR;}
 {DEFECTO} {agregar_token(DEFECTO, yytext); return DEFECTO;}
 {INTERRUMPIR} {agregar_token(INTERRUMPIR, yytext); return INTERRUMPIR;}
