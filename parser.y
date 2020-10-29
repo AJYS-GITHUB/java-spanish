@@ -13,15 +13,26 @@ int yyerror(char *s);
 %token TIPO_BYTE TIPO_CORTO TIPO_LARGO TIPO_FLOTANTE TIPO_DOBLE TIPO_ENTERO TIPO_CARACTER TIPO_CADENA TIPO_BOOLEANO TIPO_VACIO ENTERO REAL CARACTER CADENA BOOL OPERADOR_SUMA OPERADOR_RESTA OPERADOR_MULTIPLICACION OPERADOR_DIVISION OPERADOR_MODULO OPERADOR_INCREMENTAL OPERADOR_DECREMENTAL OPERADOR_ARITMETICO_COMBINADO OPERADOR_COMPARACION OPERADOR_BOOLEANO NEG OPERADOR_CONDICIONAL_SI OPERADOR_CONDICIONAL_CONTRA FIN_LINEA ASIGNACION PARENTESIS_A PARENTESIS_C LLAVE_A LLAVE_C CORCHETE_A CORCHETE_C COMA SI CONTRA MIENTRAS HACER PARA CAMBIAR CASO INTERRUMPIR DEFECTO CONTINUAR PUBLICO CLASE ESTATICO PRIMITIVA_LEER PRIMITIVA_ESCRIBIR ESPACIOS SALTO COMENTARIO_LINEA COMENTARIO_LINEAS ID
 
 %%
+decl_clase: PUBLICO CLASE ID LLAVE_A decl_main LLAVE_C
+    ;
+decl_main: PUBLICO ESTATICO TIPO_VACIO ID PARENTESIS_A TIPO_CADENA ID CORCHETE_A CORCHETE_C PARENTESIS_C LLAVE_A S LLAVE_C
+    ;
 S: I S
     | I
     ;
-I: declaracion FIN_LINEA {printf("Declaracion valida.\n");}
-    | asignaciones FIN_LINEA {printf("Asignacion valida.\n");}
-    | condicional {printf("Condicional valida.\n");}
-    | switch {printf("Condicional switch valida.\n");}
-    | while {printf("While valida.\n");}
-    | do {printf("Do while valida.\n");}
+I: declaracion FIN_LINEA
+    | asignaciones FIN_LINEA
+    | condicional
+    | switch
+    | while
+    | do
+    | for
+    | write FIN_LINEA
+    | falso_si {printf("Caracter no esperado, se esperaba (");}
+    | falso_for {printf("Se esperaba una expresion boolena no aritmetica");}
+    | falso_caso {printf("Se esperaba un valor literal");}
+    | falso_while {printf("Se esperaba una expresion boolena no aritmetica");}
+    | falso_si_expr {printf("Se esperaba una expresion booleana");}
     ;
 /*Gramatica para ids*/
 identificadores: ID
@@ -100,6 +111,7 @@ decl_cadena: TIPO_CADENA identificadores
     | TIPO_CADENA asig_cadena
     ;
 asig_cadena: identificadores ASIGNACION CADENA
+    | identificadores ASIGNACION PRIMITIVA_LEER
     ;
 decl_booleano: TIPO_BOOLEANO identificadores
     | TIPO_BOOLEANO asig_booleano
@@ -113,7 +125,7 @@ asig_decremental: ID OPERADOR_DECREMENTAL
 condicional: condicional_si condicional_contra
     | condicional_si;
 condicional_si: SI PARENTESIS_A expr_booleana PARENTESIS_C I
-    | SI PARENTESIS_A expr_booleana PARENTESIS_C LLAVE_A I LLAVE_C;
+    | SI PARENTESIS_A expr_booleana PARENTESIS_C LLAVE_A S LLAVE_C;
 condicional_contra: CONTRA I
     | CONTRA LLAVE_A S LLAVE_C;
 switch: CAMBIAR PARENTESIS_A ID PARENTESIS_C LLAVE_A case default LLAVE_C;
@@ -125,6 +137,15 @@ while: MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C I
     | MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C LLAVE_A S LLAVE_C;
 do: HACER I MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C
     | HACER LLAVE_A S LLAVE_C MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C;
+for: PARA PARENTESIS_A declaracion FIN_LINEA expr_booleana FIN_LINEA asignaciones PARENTESIS_C LLAVE_A S LLAVE_C
+    | PARA PARENTESIS_A asignaciones FIN_LINEA expr_booleana FIN_LINEA asignaciones PARENTESIS_C LLAVE_A S LLAVE_C;
+write: PRIMITIVA_ESCRIBIR PARENTESIS_A CADENA PARENTESIS_C
+    | PRIMITIVA_ESCRIBIR PARENTESIS_A ID PARENTESIS_C;
+falso_si: SI CORCHETE_A expr_booleana CORCHETE_C;
+falso_for: PARA PARENTESIS_A declaracion FIN_LINEA expr_aritmetica FIN_LINEA asignaciones PARENTESIS_C;
+falso_caso: CASO ID OPERADOR_CONDICIONAL_CONTRA;
+falso_while: MIENTRAS PARENTESIS_A expr_aritmetica PARENTESIS_C;
+falso_si_expr: SI PARENTESIS_A expr_aritmetica PARENTESIS_C;
 %%
 
 /* Sección CODIGO USUARIO */

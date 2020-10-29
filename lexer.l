@@ -72,7 +72,8 @@ COMENTARIO_LINEA "//".*\n
 COMENTARIO_LINEAS "/*"(.|\n)*"*/"
 ID [a-zA-Z_$][a-zA-Z0-9_$]*
 FALSOID [0-9_$]*[a-zA-Z_$][a-zA-Z0-9_$]*
-FALSOENTERO {ENTERO}[^{ENTERO}]
+FALSOREAL -?[0-9]+\.[0-9]+(\.[0-9]+)+
+FALSOENTERO -?[0-9]+[a-zA-Z]+[0-9]*
 
 /* Sección REGLAS */ 
 %%
@@ -132,7 +133,10 @@ FALSOENTERO {ENTERO}[^{ENTERO}]
 {SALTO} {linea=linea+1;}
 {COMENTARIO_LINEA} {}
 {COMENTARIO_LINEAS} {}
-{FALSOID} {printf("Error en al linea %d\n",linea);}
+{FALSOID} {printf("Error en el identificador %d\n",linea);}
+{FALSOREAL} {printf("Error en el real %d\n",linea);}
+{FALSOENTERO} {printf("Error en el entero %d\n",linea);}
+
 
 
 %%
