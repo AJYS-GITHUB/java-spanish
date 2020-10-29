@@ -9,6 +9,7 @@
 int agregar_token(int tipo, char *palabra);
 int buscar_token(char *palabra, int tipo);
 int listar_tokens();
+int linea = 1;
 %}
 
 
@@ -69,6 +70,8 @@ SALTO \n
 COMENTARIO_LINEA "//".*\n
 COMENTARIO_LINEAS "/*"(.|\n)*"*/"
 ID [a-zA-Z_$][a-zA-Z0-9_$]*
+FALSOID [0-9_$]*[a-zA-Z_$][a-zA-Z0-9_$]*
+FALSOENTERO {ENTERO}[^{ENTERO}]
 
 /* Sección REGLAS */ 
 %%
@@ -124,9 +127,11 @@ ID [a-zA-Z_$][a-zA-Z0-9_$]*
 {CORCHETE_C} {agregar_token(CORCHETE_C, yytext); return CORCHETE_C;}
 {COMA} {agregar_token(COMA, yytext); return COMA;}
 {ESPACIOS} {}
-{SALTO} {}
+{SALTO} {linea=linea+1;}
 {COMENTARIO_LINEA} {}
 {COMENTARIO_LINEAS} {}
+{FALSOID} {printf("Error en al linea %d\n",linea);}
+
 
 %%
 /* Sección CODIGO USUARIO */

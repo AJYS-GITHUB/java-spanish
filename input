@@ -1,5 +1,7 @@
-entero i;
-i = 5;
-i = i+3;
-i += 5;
+entero area;
+entero base = 5;
+entero altura = 10;
+area = (base * altura)/2;
+escribirLinea("El area del triangulo es:");
+escribirLinea(area);
 
