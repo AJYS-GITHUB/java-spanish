@@ -1,4 +1,4 @@
-/* Analizador sintactico para reconocer sentencias  */
+/* Analizador sintactico para reconocer java en español  */
 
 /* Sección DEFINICIONES */
 %{
@@ -139,7 +139,7 @@ do: HACER I MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C
     | HACER LLAVE_A S LLAVE_C MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C;
 for: PARA PARENTESIS_A declaracion FIN_LINEA expr_booleana FIN_LINEA asignaciones PARENTESIS_C LLAVE_A S LLAVE_C
     | PARA PARENTESIS_A asignaciones FIN_LINEA expr_booleana FIN_LINEA asignaciones PARENTESIS_C LLAVE_A S LLAVE_C;
-write: PRIMITIVA_ESCRIBIR PARENTESIS_A CADENA PARENTESIS_C
+write: PRIMITIVA_ESCRIBIƐR PARENTESIS_A CADENA PARENTESIS_C
     | PRIMITIVA_ESCRIBIR PARENTESIS_A ID PARENTESIS_C;
 falso_si: SI CORCHETE_A expr_booleana CORCHETE_C;
 falso_for: PARA PARENTESIS_A declaracion FIN_LINEA expr_aritmetica FIN_LINEA asignaciones PARENTESIS_C;
