@@ -20,6 +20,7 @@ I: declaracion FIN_LINEA {printf("Declaracion valida.\n");}
     | asignaciones FIN_LINEA {printf("Asignacion valida.\n");}
     | condicional {printf("Condicional valida.\n");}
     | switch {printf("Condicional switch valida.\n");}
+    | while {printf("While valida.\n");}
     ;
 /*Gramatica para ids*/
 identificadores: ID
@@ -119,8 +120,8 @@ case: CASO expr_aritmetica OPERADOR_CONDICIONAL_CONTRA S INTERRUMPIR FIN_LINEA
     | CASO expr_aritmetica OPERADOR_CONDICIONAL_CONTRA S INTERRUMPIR FIN_LINEA case;
 default: /* vacío */
     | DEFECTO OPERADOR_CONDICIONAL_CONTRA S;
-
-
+while: MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C I
+    | MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C LLAVE_A S LLAVE_C;
 %%
 
 /* Sección CODIGO USUARIO */

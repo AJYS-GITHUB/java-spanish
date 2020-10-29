@@ -14,6 +14,11 @@ cambiar(area)
 	caso 2:
 		area--;
 		interrumpir;	
+	defecto:
+		area = area * area;
+}
+mientras(area<0){
+	altura++;
 }
 
 
