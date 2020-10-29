@@ -2,6 +2,9 @@ entero area;
 entero base = 5;
 entero altura = 10;
 area = (base * altura)/2;
-escribirLinea("El area del triangulo es:");
-escribirLinea(area);
+si(area > 5)
+	area = 0;
+contra
+	area++;
+
 

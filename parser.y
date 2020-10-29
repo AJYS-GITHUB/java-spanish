@@ -18,6 +18,7 @@ S: I S
     ;
 I: declaracion FIN_LINEA {printf("Declaracion valida.\n");}
     | asignaciones FIN_LINEA {printf("Asignacion valida.\n");}
+    | condicional {printf("Condicional valida.\n");}
     ;
 /*Gramatica para ids*/
 identificadores: ID
@@ -65,9 +66,7 @@ asignaciones: asig_numero
     | asig_incremental
     | asig_decremental
     ;
-asig_numero: identificadores ASIGNACION ENTERO
-    | identificadores ASIGNACION REAL
-    | identificadores ASIGNACION expr_aritmetica
+asig_numero: identificadores ASIGNACION expr_aritmetica
     | identificadores OPERADOR_ARITMETICO_COMBINADO expr_aritmetica
     ;
 /*Declaraciones*/
@@ -102,13 +101,19 @@ asig_cadena: identificadores ASIGNACION CADENA
 decl_booleano: TIPO_BOOLEANO identificadores
     | TIPO_BOOLEANO asig_booleano
     ;
-asig_booleano: identificadores ASIGNACION BOOL
-    | identificadores ASIGNACION expr_booleana
+asig_booleano: identificadores ASIGNACION expr_booleana
     ;
 asig_incremental: ID OPERADOR_INCREMENTAL
     ;
 asig_decremental: ID OPERADOR_DECREMENTAL
     ;
+condicional: condicional_si condicional_contra
+    | condicional_si;
+condicional_si: SI PARENTESIS_A expr_booleana PARENTESIS_C I
+    | SI PARENTESIS_A expr_booleana PARENTESIS_C LLAVE_A I LLAVE_C;
+condicional_contra: CONTRA I
+    | CONTRA LLAVE_A S LLAVE_C;
+
 %%
 
 /* Sección CODIGO USUARIO */
