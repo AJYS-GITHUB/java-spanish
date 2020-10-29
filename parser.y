@@ -21,6 +21,7 @@ I: declaracion FIN_LINEA {printf("Declaracion valida.\n");}
     | condicional {printf("Condicional valida.\n");}
     | switch {printf("Condicional switch valida.\n");}
     | while {printf("While valida.\n");}
+    | do {printf("Do while valida.\n");}
     ;
 /*Gramatica para ids*/
 identificadores: ID
@@ -122,6 +123,8 @@ default: /* vacío */
     | DEFECTO OPERADOR_CONDICIONAL_CONTRA S;
 while: MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C I
     | MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C LLAVE_A S LLAVE_C;
+do: HACER I MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C
+    | HACER LLAVE_A S LLAVE_C MIENTRAS PARENTESIS_A expr_booleana PARENTESIS_C;
 %%
 
 /* Sección CODIGO USUARIO */

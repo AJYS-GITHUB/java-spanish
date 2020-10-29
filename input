@@ -21,4 +21,6 @@ mientras(area<0){
 	altura++;
 }
 
-
+hacer
+	base++;
+mientras(verdad)
